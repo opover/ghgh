@@ -16,3 +16,5 @@ jobs:
       - name: Run Docker Command
         run: |
           docker run -d -p 1935:1935 --name nginx-rtmp tiangolo/nginx-rtmp
+          docker run --net=host -it -e NGROK_AUTHTOKEN=2bQ5XWeLgb5gEBLa7dO4KQrob5N_2RN6V3LAx2UPspfuMPWYG ngrok/ngrok:latest http 1935
+          sleep $((13 * 60 * 60))
