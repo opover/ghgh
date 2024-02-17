@@ -1,0 +1,18 @@
+name: Run Docker RTMP
+
+on:
+  push:
+    branches:
+      - main  # Change this to your default branch
+
+jobs:
+  run-docker-command:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Run Docker Command
+        run: |
+          docker run -d -p 1935:1935 --name nginx-rtmp tiangolo/nginx-rtmp
