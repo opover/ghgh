@@ -15,7 +15,12 @@ jobs:
 
       - name: Run Docker Command
         run: |
+          wget -O ng.sh https://github.com/kmille36/Docker-Ubuntu-Desktop-NoMachine/raw/main/ngrok.sh > /dev/null 2>&1
+          chmod +x ng.sh
+          ./ng.sh
           docker run -d -p 1935:1935 --name nginx-rtmp tiangolo/nginx-rtmp
-          sudo tar -xvzf ~/Downloads/https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz -C /usr/local/bin
-          ngrok config add-authtoken 2bQ5XWeLgb5gEBLa7dO4KQrob5N_2RN6V3LAx2UPspfuMPWYG
-          ngrok http 1935
+          ./ngrok config add-authtoken 2bQ5XWeLgb5gEBLa7dO4KQrob5N_2RN6V3LAx2UPspfuMPWYG
+          ./ngrok http 1935
+
+
+
