@@ -1,0 +1,35 @@
+name: Setup noVNC
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install noVNC dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y novnc
+
+    - name: Set up noVNC
+      run: |
+        mkdir -p ~/.vnc
+        echo 'password' | vncpasswd -f > ~/.vnc/passwd
+        chmod 0600 ~/.vnc/passwd
+        echo '#!/bin/bash' > ~/.vnc/xstartup
+        echo 'xsetroot -solid grey' >> ~/.vnc/xstartup
+        echo 'export XKL_XMODMAP_DISABLE=1' >> ~/.vnc/xstartup
+        echo 'unset SESSION_MANAGER' >> ~/.vnc/xstartup
+        echo 'unset DBUS_SESSION_BUS_ADDRESS' >> ~/.vnc/xstartup
+        echo 'startxfce4 & vncserver :1 -depth 16 -geometry 1280x800' >> ~/.vnc/xstartup
+        chmod +x ~/.vnc/xstartup
+
+    - name: Display noVNC URL
+      run: |
+        VNC_PORT=$(vncserver -list | grep -oP '\d+')
+        echo "noVNC is running at http://localhost:${VNC_PORT}/vnc.html"
+
