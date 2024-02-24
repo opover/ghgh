@@ -17,7 +17,8 @@ jobs:
 
     - name: Create Tunnel
       run: |
-        yes yes | ssh -R 80:localhost:3389 nokey@localhost.run
+        
+        ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -R 80:localhost:3389 nokey@localhost.run
         Start-Sleep -Seconds 18000  # Delay for 5 hours (18000 seconds)
         # Replace the following line with the actual command you want to execute after the specified time
         Invoke-Expression -Command "Your-Actual-Command-Here"
