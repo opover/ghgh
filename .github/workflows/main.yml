@@ -17,9 +17,8 @@ jobs:
 
     - name: Create Tunnel
       run: |
-        docker run --net=host -it -e NGROK_AUTHTOKEN=2bQ5XWeLgb5gEBLa7dO4KQrob5N_2RN6V3LAx2UPspfuMPWYG ngrok/ngrok:latest tcp 3389
-        Start-Sleep -Seconds 18000  # تأخير لمدة 5 ساعات (18000 ثانية)
-        # يمكنك استبدال "أمر آخر هنا" بالأمر الفعلي الذي ترغب في تنفيذه بعد انقضاء الوقت المحدد
-        # على سبيل المثال، يمكنك استخدام Invoke-Expression لتشغيل سكربت PowerShell
-        Invoke-Expression -Command "أمر آخر هنا"
+        ssh -R 80:localhost:3389 nokey@localhost.run
+        Start-Sleep -Seconds 18000  # Delay for 5 hours (18000 seconds)
+        # Replace the following line with the actual command you want to execute after the specified time
+        Invoke-Expression -Command "Your-Actual-Command-Here"
       shell: pwsh
