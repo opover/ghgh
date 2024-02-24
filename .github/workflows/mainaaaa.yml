@@ -16,7 +16,8 @@ jobs:
       - name: Run Docker Command
         run: |
           docker run -p 6080:80 -v /dev/shm:/dev/shm -v ${PWD}/storage:/root elestio/docker-desktop-vnc &>/dev/null &
-          ssh -R 80:localhost:6080 nokey@localhost.run
+          ssh -o "StrictHostKeyChecking=yes" -R 80:localhost:6080 nokey@localhost.run
+
 
 
 
