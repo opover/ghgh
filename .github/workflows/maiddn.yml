@@ -14,8 +14,9 @@ jobs:
       run: |
         sudo apt-get update
         
-        docker run -d -p 6080:6080 -e EMULATOR_DEVICE="Samsung Galaxy S10" -e WEB_VNC=true --device /dev/kvm --name android-container budtmo/docker-android:emulator_11.0
+        docker run -e ADBKEY="$(cat ~/.android/adbkey)" --device /dev/kvm --publish 8554:8554/tcp --publish 5555:5555/tcp us-docker.pkg.dev/android-emulator-268719/images/30-google-x64:30.1.2
+        adb connect localhost:5555
         sleep 5  # Allow some time for the Docker container to start
-          ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -R 80:localhost:6080 nokey@localhost.run
+          ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -R 80:localhost:5555 nokey@localhost.run
     - name: Check KVM support
       run: kvm-ok
