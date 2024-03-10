@@ -14,9 +14,8 @@ jobs:
       run: |
         sudo apt-get update
         
-        docker run -e ADBKEY="$(cat ~/.android/adbkey)" --device /dev/kvm --publish 8554:8554/tcp --publish 5555:5555/tcp us-docker.pkg.dev/android-emulator-268719/images/30-google-x64:30.1.2
-        adb connect localhost:5555
+        docker run -it --privileged -d -p 5900:5900 --name androidContainer --privileged android-emulator  
         sleep 5  # Allow some time for the Docker container to start
-          ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -R 80:localhost:5555 nokey@localhost.run
+          ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -R 80:localhost:5900 nokey@localhost.run
     - name: Check KVM support
       run: kvm-ok
