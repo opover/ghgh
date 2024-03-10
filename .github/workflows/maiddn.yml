@@ -13,7 +13,9 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cpu-checker
-
+        
+        docker run -d -p 6080:6080 -e EMULATOR_DEVICE="Samsung Galaxy S10" -e WEB_VNC=true --device /dev/kvm --name android-container budtmo/docker-android:emulator_11.0
+        sleep 5  # Allow some time for the Docker container to start
+          ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -R 80:localhost:6080 nokey@localhost.run
     - name: Check KVM support
       run: kvm-ok
