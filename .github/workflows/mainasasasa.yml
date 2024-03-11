@@ -1,20 +1,17 @@
-name: Code Server Setup
+name: Run Docker RTMP
 
 on:
   push:
     branches:
-      - main
+      - main  # Change this to your default branch
 
 jobs:
-  build:
+  run-docker-command:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-
-      - name: Set up Docker
-        uses: docker/setup-docker-action@v2
 
       - name: Build Docker image
         run: docker build -t code-server-image .
