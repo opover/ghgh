@@ -1,0 +1,30 @@
+name: Code Server Setup
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-docker-action@v2
+
+      - name: Build Docker image
+        run: docker build -t code-server-image .
+
+      - name: Run Docker container
+        run: docker run -d -p 127.0.0.1:8080:8080 --name code-server-container code-server-image
+
+      - name: Sleep for 5 seconds
+        run: sleep 5
+
+      - name: Tunneling with localhost.run
+        run: |
+          ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -R 80:localhost:8080 nokey@localhost.run
