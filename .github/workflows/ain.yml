@@ -1,0 +1,33 @@
+name: Code-Server Checks
+
+on:
+  push:
+    branches:
+      - main  # Change this to your main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Node.js and npm
+      uses: actions/setup-node@v3
+      with:
+        node-version: 14
+
+    - name: Install dependencies
+      run: |
+        npm install -g code-server
+
+    - name: Start code-server
+      run: code-server &
+
+    - name: Run code-server checks
+      run: |
+        # Add your code-server checks or tests here
+
+    - name: Stop code-server
+      run: pkill code-server
